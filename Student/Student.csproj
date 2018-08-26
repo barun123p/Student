@@ -49,9 +49,11 @@
     <Compile Include="Connection.cs" />
     <Compile Include="DataAccessTier\AdminDataAccess.cs" />
     <Compile Include="DataAccessTier\AdminUser.cs" />
+    <Compile Include="DataAccessTier\SalaryInfo.cs" />
     <Compile Include="DataAccessTier\StudentContact.cs" />
     <Compile Include="DataAccessTier\Enrollment.cs" />
     <Compile Include="DataAccessTier\StudentInfo.cs" />
+    <Compile Include="DataAccessTier\Updatelog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentDataAccess.cs" />
   </ItemGroup>

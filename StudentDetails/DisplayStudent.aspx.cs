@@ -1,7 +1,9 @@
 ﻿using Student;
+using Student.DataAccessTier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -27,12 +29,35 @@ namespace StudentDetails
 
         protected void btnInsert_Click(object sender, EventArgs e)
         {
-            StudentDataAccess studeuntdata = new StudentDataAccess();
-            StudentInfo student = new StudentInfo();
-            // student.StudentId = Convert.ToInt32(txtStudentId.Text);
-            student.FirstName = txtFirstName.Text;
-            student.LastName = txtLastName.Text;
-            studeuntdata.insertStudentInfo(student);
+            try
+            {
+                //int x = 0; int p = 1 / x;
+                StudentDataAccess studeuntdata = new StudentDataAccess();
+                StudentInfo student = new StudentInfo();
+                // student.StudentId = Convert.ToInt32(txtStudentId.Text);
+                student.FirstName = txtFirstName.Text;
+                student.LastName = txtLastName.Text;
+                studeuntdata.insertStudentInfo(student);
+
+            }
+            catch (Exception ex)
+            {
+
+                string CurrentClassName = MethodBase.GetCurrentMethod().DeclaringType.Name.ToString();
+                string CurrentModuleName = MethodBase.GetCurrentMethod().Name.ToString();
+                string Methodis = "Method:" + CurrentClassName + "(" + CurrentModuleName + ") ";
+                string Msg = Methodis + ex.ToString();
+                Updatelog ulog = new Updatelog();
+                ulog.AppDescript = ex.Message;
+                ulog.AppModule = Methodis;
+                ulog.AppType = 1;
+                StudentDataAccess.insertLogerror(ulog);
+
+            }
+            finally
+            {
+                // do something
+            }
 
         }
 
@@ -71,12 +96,12 @@ namespace StudentDetails
             studentInfo.FirstName = txtFirstName.Text;
             studentInfo.LastName = txtLastName.Text;
             studeuntdata.updateStudentInfo(studentInfo);
-           
+
 
             Response.Redirect("DisplayStudent.aspx");
         }
 
-               protected void btnDelete_Click1(object sender, EventArgs e)
+        protected void btnDelete_Click1(object sender, EventArgs e)
         {
             StudentDataAccess studentData = new StudentDataAccess();
             studentData.DeleteStudent(Convert.ToInt32(ddlStudentID.SelectedValue));
